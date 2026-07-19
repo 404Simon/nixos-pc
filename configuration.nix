@@ -26,6 +26,10 @@
   services.displayManager.ly.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
+  hardware.nvidia.modesetting.enable = true;
   
 
   services.pipewire = {
@@ -47,12 +51,13 @@
   programs.zsh.enable = true;
   programs.firefox.enable = true;
 
+  programs.steam.enable = true;
+
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
     foot
-    steam
   ];
 
   fonts.packages = with pkgs; [
