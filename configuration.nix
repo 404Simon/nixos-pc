@@ -40,9 +40,13 @@
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
   hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.open = false;
+  # GTX 1070 (Pascal) was dropped from stable driver (595+), needs legacy branch
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   
 
   services.pipewire = {
