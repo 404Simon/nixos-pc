@@ -27,6 +27,15 @@
     options = "ctrl:nocaps";
   };
 
+  systemd.services.kbdrate = {
+    description = "Set keyboard repeat rate";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.kbd}/bin/kbdrate -d 180 -r 50";
+    };
+  };
+
   services.displayManager.ly.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
@@ -113,6 +122,24 @@
 
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  systemd.services.nix-generation-cleanup = {
+    description = "Clean up old NixOS generations, keeping only the 5 newest";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nix}/bin/nix-env --delete-generations +5 -p /nix/var/nix/profiles/system";
+    };
+  };
+
+  systemd.timers.nix-generation-cleanup = {
+    description = "Weekly cleanup of old NixOS generations";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+  };
+
   system.stateVersion = "26.05";
 }
 

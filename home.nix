@@ -37,6 +37,12 @@
     VariantList=nodeadkeys
   '';
 
+  xdg.configFile."kcminputrc".text = ''
+    [Keyboard]
+    RepeatDelay=180
+    RepeatRate=50
+  '';
+
   home.username = "simon";
   home.homeDirectory = "/home/simon";
 

@@ -1,16 +1,22 @@
 { config, pkgs, ... }:
 
 {
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
   home.packages = with pkgs; [
+    neovim
     luajit
   ];
+
+  home.sessionPath = [ "${config.home.homeDirectory}/.config/nvim/bin" ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
+  home.shellAliases = {
+    vi = "nvim";
+    vim = "nvim";
+  };
 
   home.activation.createNvimLink = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -L "${config.home.homeDirectory}/.config/nvim" ]; then

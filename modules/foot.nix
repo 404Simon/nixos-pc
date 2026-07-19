@@ -7,7 +7,6 @@
     settings = {
       main = {
         font = "JetBrains Mono Nerd Font Mono:size=12";
-        locale = "en_US.UTF-8";
       };
       colors-dark = {
         alpha = 0.9;
