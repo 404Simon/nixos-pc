@@ -15,8 +15,12 @@ let
 in
 
 {
-  #xdg.configFile."opencode/skills".source =
-  #  config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/resources/opencode/skills";
+  home.activation.createOpencodeSkillsLink = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -L "${config.home.homeDirectory}/.config/opencode/skills" ]; then
+      rm -rf "${config.home.homeDirectory}/.config/opencode/skills"
+      ln -sfn "${config.home.homeDirectory}/nixos-pc/resources/opencode/skills" "${config.home.homeDirectory}/.config/opencode/skills"
+    fi
+  '';
 
   programs.opencode = {
     enable = true;
@@ -70,7 +74,7 @@ in
             Typst is a modern markup language for typesetting beautiful professional documents.
           '';
           mode = "all";
-          prompt = "";#builtins.readFile ../resources/opencode/agents/typster.md;
+          prompt = builtins.readFile ../resources/opencode/agents/typster.md;
         };
 
         anki = {
@@ -79,7 +83,7 @@ in
             It extracts text from PDFs using pdftotext and creates well-structured cards following established conventions.
           '';
           mode = "all";
-          prompt = "";#builtins.readFile ../resources/opencode/agents/anki.md;
+          prompt = builtins.readFile ../resources/opencode/agents/anki.md;
         };
       };
     };

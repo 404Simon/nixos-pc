@@ -16,11 +16,15 @@
 
   time.timeZone = "Europe/Berlin";
 
-  i18n.defaultLocale = "de_DE.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "de";
+    useXkbConfig = true;
+  };
+  services.xserver.xkb = {
+    layout = "de";
+    options = "ctrl:nocaps";
   };
 
   services.displayManager.ly.enable = true;
@@ -52,6 +56,7 @@
   programs.firefox.enable = true;
 
   programs.steam.enable = true;
+  programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
