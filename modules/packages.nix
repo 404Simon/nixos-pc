@@ -10,6 +10,7 @@
       imagemagick
       rsync
       restic
+      croc
       localsend
       pdftk
       pdfchain

@@ -76,11 +76,17 @@
     wget
     git
     foot
+    fontconfig
   ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
+
+  environment.sessionVariables = {
+    SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    CURL_CA_BUNDLE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

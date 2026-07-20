@@ -151,6 +151,7 @@ in
       rector = "./vendor/bin/rector";
       sail = "./vendor/bin/sail";
       db = "lazysql \"file:database/database.sqlite?loc=auto\"";
+      oc = "opencode";
 
       dev = "eval \"$(${scriptsDir}/projectnavigator.sh)\"";
       v = "eval \"$(${scriptsDir}/vorlesungsnavigator.sh)\"";
