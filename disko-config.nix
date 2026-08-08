@@ -17,32 +17,51 @@
                 mountOptions = [ "umask=0077" ];
               };
             };
-            swap = {
-              size = "16G";
-              content = {
-                type = "swap";
-                discardPolicy = "both";
-                resumeDevice = true;
-              };
-            };
-            root = {
+            luks = {
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = [ "-f" ]; # overrides existing partition
-                subvolumes = {
-                  "/rootfs" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
+                type = "luks";
+                name = "crypted";
+                settings.allowDiscards = true;
+                content = {
+                  type = "lvm_pv";
+                  vg = "pool";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    lvm_vg = {
+      pool = {
+        type = "lvm_vg";
+        lvs = {
+          swap = {
+            size = "16G";
+            content = {
+              type = "swap";
+              discardPolicy = "both";
+              resumeDevice = true;
+            };
+          };
+          root = {
+            size = "100%FREE";
+            content = {
+              type = "btrfs";
+              extraArgs = [ "-f" ];
+              subvolumes = {
+                "/rootfs" = {
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "discard=async" ];
+                };
+                "/home" = {
+                  mountpoint = "/home";
+                  mountOptions = [ "compress=zstd" "discard=async" ];
+                };
+                "/nix" = {
+                  mountpoint = "/nix";
+                  mountOptions = [ "compress=zstd" "noatime" "discard=async" ];
                 };
               };
             };
