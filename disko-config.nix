@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      my-disk = {
+      main-ssd = {
         type = "disk";
         device = "/dev/sdc";
         content = {

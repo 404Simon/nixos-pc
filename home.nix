@@ -21,6 +21,7 @@
     ./modules/zathura.nix
     ./modules/sioyek.nix
     ./modules/webapps.nix
+    ./modules/syncthing.nix
   ];
 
   home.keyboard = {
